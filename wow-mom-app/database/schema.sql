@@ -1,5 +1,5 @@
 -- MOTHERS Table
-CREATE TABLE MOTHERS (
+CREATE TABLE IF NOT EXISTS MOTHERS (
     mother_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE MOTHERS (
 );
 
 -- LEADERS Table
-CREATE TABLE LEADERS (
+CREATE TABLE IF NOT EXISTS LEADERS (
     leader_id INTEGER PRIMARY KEY AUTOINCREMENT,
     mother_id INTEGER UNIQUE, -- Optional: If a leader is also a registered mother
     first_name TEXT NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE LEADERS (
 );
 
 -- GROUPS Table
-CREATE TABLE GROUPS (
+CREATE TABLE IF NOT EXISTS GROUPS (
     group_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT,
@@ -53,7 +53,7 @@ CREATE TABLE GROUPS (
 );
 
 -- APPLICATIONS Table (Mother applying to a group)
-CREATE TABLE APPLICATIONS (
+CREATE TABLE IF NOT EXISTS APPLICATIONS (
     application_id INTEGER PRIMARY KEY AUTOINCREMENT,
     mother_id INTEGER NOT NULL,
     group_id INTEGER NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE APPLICATIONS (
 );
 
 -- NOTIFICATIONS Table
-CREATE TABLE NOTIFICATIONS (
+CREATE TABLE IF NOT EXISTS NOTIFICATIONS (
     notification_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER, -- Can be mother_id, leader_id, or admin_id
     user_type TEXT NOT NULL, -- 'Mother', 'Leader', 'Admin' to differentiate user_id context
@@ -87,7 +87,7 @@ CREATE TABLE NOTIFICATIONS (
 );
 
 -- Junction table for Mothers and Groups (Many-to-Many relationship)
-CREATE TABLE GROUP_MEMBERS (
+CREATE TABLE IF NOT EXISTS GROUP_MEMBERS (
     group_member_id INTEGER PRIMARY KEY AUTOINCREMENT,
     mother_id INTEGER NOT NULL,
     group_id INTEGER NOT NULL,

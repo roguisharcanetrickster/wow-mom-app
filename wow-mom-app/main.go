@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -13,8 +12,8 @@ import (
 )
 
 const (
-	dbFileName    = "wowmom.db"
-	schemaFilePath = "./database/schema.sql"
+	dbFileName    = "wow-mom-app/wowmom.db"
+	schemaFilePath = "./wow-mom-app/database/schema.sql"
 	port          = ":30111" // As requested, port 30111
 )
 
@@ -36,14 +35,14 @@ func main() {
 	router := mux.NewRouter()
 
 	// Serve static files
-	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./wow-mom-app/static"))))
 
 	// Routes
 	router.HandleFunc("/", homeHandler).Methods("GET")
 	// TODO: Add more routes for authentication, mothers, leaders, groups, applications, notifications
 
 	fmt.Printf("Server starting on port %s\n", port)
-	log.Fatal(http.ListenAndServe(port, router))
+	log.Fatal(http.ListenAndServe("0.0.0.0"+port, router))
 }
 
 func initDB() {
