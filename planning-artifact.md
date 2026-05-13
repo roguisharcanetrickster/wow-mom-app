@@ -1,4 +1,4 @@
-# "WOW Mom" Application Development Plan
+# pt install lazygit"WOW Mom" Application Development Plan
 
 This plan outlines the steps to develop the "WOW Mom - Mother Support Group Management Platform" based on the provided comprehensive application prompt.
 
