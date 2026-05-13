@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wow Mom App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="message">Wow Mom!</h1>
+        <div class="controls">
+            <label for="message-input">Message:</label>
+            <input type="text" id="message-input" value="Wow Mom!">
+            <span id="message-error" class="error-message"></span>
+
+            <label for="font-select">Font:</label>
+            <select id="font-select">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+            </select>
+
+            <label for="color-picker">Color:</label>
+            <input type="color" id="color-picker" value="#ff0000">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
