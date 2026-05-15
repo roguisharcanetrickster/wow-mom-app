@@ -3,16 +3,19 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/gorilla/mux"
 	_ "github.com/mattn/go-sqlite3"
+
+	"wow-mom-app/api"
 )
 
 const (
-	dbFileName    = "wow-mom-app/wowmom.db"
+	dbFileName    = "./wowmom.db"
 	schemaFilePath = "./wow-mom-app/database/schema.sql"
 	port          = ":30111" // As requested, port 30111
 )
@@ -34,15 +37,17 @@ func main() {
 	// Set up router
 	router := mux.NewRouter()
 
+	api.SetDB(db)
+
 	// Serve static files
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./wow-mom-app/static"))))
 
 	// Routes
 	router.HandleFunc("/", homeHandler).Methods("GET")
-	// TODO: Add more routes for authentication, mothers, leaders, groups, applications, notifications
+	api.SetupRoutes(router)
 
 	fmt.Printf("Server starting on port %s\n", port)
-	log.Fatal(http.ListenAndServe("0.0.0.0"+port, router))
+	log.Fatal(http.ListenAndServe(""+port, router))
 }
 
 func initDB() {
@@ -72,6 +77,11 @@ func initDB() {
 
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	// For now, a simple response. Later, this will render an HTML template.
-	fmt.Fprintf(w, "Welcome to WOW Mom App!")
+	// Serve the index.html template
+	tmpl, err := template.ParseFiles("./wow-mom-app/templates/index.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	tmpl.Execute(w, nil)
 }
