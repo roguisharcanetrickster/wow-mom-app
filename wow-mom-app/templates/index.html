@@ -3,229 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WOW Mom App CRUD</title>
+    <title>WOW Mom</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#007bff">
 </head>
 <body>
-    <h1>WOW Mom App CRUD Interface</h1>
+    <main class="container">
+        <nav>
+            <ul>
+                <li><strong>WOW Mom</strong></li>
+            </ul>
+            <ul>
+                <li><a href="#" onclick="showSection('mothers')">Mothers</a></li>
+                <li><a href="#" onclick="showSection('leaders')">Leaders</a></li>
+                <li><a href="#" onclick="showSection('groups')">Groups</a></li>
+                <li><a href="#" onclick="showSection('applications')">Apps</a></li>
+            </ul>
+        </nav>
 
-    <nav>
-        <button onclick="showSection('mothers')">Mothers</button>
-        <button onclick="showSection('leaders')">Leaders</button>
-        <button onclick="showSection('groups')">Groups</button>
-        <button onclick="showSection('applications')">Applications</button>
-    </nav>
+        <section id="mothers">
+            <h2>Mothers</h2>
+            <button onclick="openMotherForm()">Add Mother</button>
+            <table id="mothers-table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="mothers-list"></tbody>
+            </table>
+        </section>
 
-    <div id="mothers-section" class="crud-section">
-        <h2>Mothers</h2>
-        <button onclick="openMotherModal()">Add Mother</button>
-        <table id="mothers-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="mothers-table-body">
-                <!-- Mother data will be loaded here -->
-            </tbody>
-        </table>
-    </div>
+        <section id="leaders" style="display:none">
+            <h2>Leaders</h2>
+            <tbody id="leaders-list"></tbody>
+        </section>
 
-    <div id="leaders-section" class="crud-section" style="display:none;">
-        <h2>Leaders</h2>
-        <button onclick="openLeaderModal()">Add New Leader</button>
-        <table id="leaders-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Status</th>
-                    <th>Approved</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="leaders-table-body">
-                <!-- Leader data will be loaded here -->
-            </tbody>
-        </table>
-    </div>
+        <section id="groups" style="display:none">
+            <h2>Groups</h2>
+            <tbody id="groups-list"></tbody>
+        </section>
 
-    <div id="groups-section" class="crud-section" style="display:none;">
-        <h2>Groups</h2>
-        <button onclick="openGroupModal()">Add New Group</button>
-        <table id="groups-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Leader ID</th>
-                    <th>Max Members</th>
-                    <th>Current Members</th>
-                    <th>Status</th>
-                    <th>Frequency</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="groups-table-body">
-                <!-- Group data will be loaded here -->
-            </tbody>
-        </table>
-    </div>
+        <section id="applications" style="display:none">
+            <h2>Applications</h2>
+            <tbody id="applications-list"></tbody>
+        </section>
 
-    <div id="applications-section" class="crud-section" style="display:none;">
-        <h2>Applications</h2>
-        <button onclick="openApplicationModal()">Add New Application</button>
-        <table id="applications-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Mother ID</th>
-                    <th>Group ID</th>
-                    <th>Status</th>
-                    <th>Interview Confirmed</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="applications-table-body">
-                <!-- Application data will be loaded here -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Modals for Add/Edit operations -->
-    <div id="mother-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeMotherModal()">&times;</span>
-            <h3 id="mother-modal-title">Add Mother</h3>
-            <form id="mother-form">
-                <input type="hidden" id="mother-id">
-                <label for="mother-first-name">First Name:</label>
-                <input type="text" id="mother-first-name" required>
-                <label for="mother-last-name">Last Name:</label>
-                <input type="text" id="mother-last-name" required>
-                <label for="mother-email">Email:</label>
-                <input type="email" id="mother-email" required>
-                <label for="mother-phone-number">Phone Number:</label>
-                <input type="text" id="mother-phone-number">
-                <label for="mother-address">Address:</label>
-                <input type="text" id="mother-address">
-                <label for="mother-city">City:</label>
-                <input type="text" id="mother-city">
-                <label for="mother-state">State:</label>
-                <input type="text" id="mother-state">
-                <label for="mother-zip-code">Zip Code:</label>
-                <input type="text" id="mother-zip-code">
-                <label for="mother-date-of-birth">Date of Birth:</label>
-                <input type="date" id="mother-date-of-birth">
-                <label for="mother-children-info">Children Info (JSON/Comma-separated):</label>
-                <input type="text" id="mother-children-info">
-                <label for="mother-preferred-meeting-times">Preferred Meeting Times (JSON/Comma-separated):</label>
-                <input type="text" id="mother-preferred-meeting-times">
-                <label for="mother-preferred-locations">Preferred Locations (JSON/Comma-separated):</label>
-                <input type="text" id="mother-preferred-locations">
-                <button type="submit">Save</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="leader-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeLeaderModal()">&times;</span>
-            <h3 id="leader-modal-title">Add Leader</h3>
-            <form id="leader-form">
-                <input type="hidden" id="leader-id">
-                <label for="leader-mother-id">Mother ID:</label>
-                <input type="number" id="leader-mother-id">
-                <label for="leader-first-name">First Name:</label>
-                <input type="text" id="leader-first-name" required>
-                <label for="leader-last-name">Last Name:</label>
-                <input type="text" id="leader-last-name" required>
-                <label for="leader-email">Email:</label>
-                <input type="email" id="leader-email" required>
-                <label for="leader-phone-number">Phone Number:</label>
-                <input type="text" id="leader-phone-number">
-                <label for="leader-bio">Bio:</label>
-                <textarea id="leader-bio"></textarea>
-                <label for="leader-status">Status:</label>
-                <input type="text" id="leader-status">
-                <label for="leader-approved-by-admin">Approved by Admin:</label>
-                <input type="checkbox" id="leader-approved-by-admin">
-                <button type="submit">Save</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="group-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeGroupModal()">&times;</span>
-            <h3 id="group-modal-title">Add Group</h3>
-            <form id="group-form">
-                <input type="hidden" id="group-id">
-                <label for="group-name">Name:</label>
-                <input type="text" id="group-name" required>
-                <label for="group-description">Description:</label>
-                <textarea id="group-description"></textarea>
-                <label for="group-leader-id">Leader ID:</label>
-                <input type="number" id="group-leader-id" required>
-                <label for="group-max-members">Max Members:</label>
-                <input type="number" id="group-max-members" value="15">
-                <label for="group-current-members">Current Members:</label>
-                <input type="number" id="group-current-members" value="0">
-                <label for="group-status">Status:</label>
-                <input type="text" id="group-status" value="Active">
-                <label for="group-meeting-details">Meeting Details:</label>
-                <input type="text" id="group-meeting-details">
-                <label for="group-meeting-frequency">Meeting Frequency:</label>
-                <input type="text" id="group-meeting-frequency">
-                <button type="submit">Save</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="application-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeApplicationModal()">&times;</span>
-            <h3 id="application-modal-title">Add Application</h3>
-            <form id="application-form">
-                <input type="hidden" id="application-id">
-                <label for="application-mother-id">Mother ID:</label>
-                <input type="number" id="application-mother-id" required>
-                <label for="application-group-id">Group ID:</label>
-                <input type="number" id="application-group-id" required>
-                <label for="application-status">Status:</label>
-                <input type="text" id="application-status" value="Pending">
-                <label for="application-interview-date">Interview Date:</label>
-                <input type="date" id="application-interview-date">
-                <label for="application-interview-time-slot">Interview Time Slot:</label>
-                <input type="datetime-local" id="application-interview-time-slot">
-                <label for="application-interview-confirmed-by-mother">Interview Confirmed by Mother:</label>
-                <input type="checkbox" id="application-interview-confirmed-by-mother">
-                <label for="application-rejection-reason">Rejection Reason:</label>
-                <input type="text" id="application-rejection-reason">
-                <label for="application-accepted-date">Accepted Date:</label>
-                <input type="date" id="application-accepted-date">
-                <label for="application-activated-date">Activated Date:</label>
-                <input type="date" id="application-activated-date">
-                <label for="application-notes-from-leader">Notes From Leader:</label>
-                <input type="text" id="application-notes-from-leader">
-                <button type="submit">Save</button>
-            </form>
-        </div>
-    </div>
-
+        <!-- Dynamic Form Modal -->
+        <dialog id="form-modal">
+            <article>
+                <header>
+                    <a href="#close" aria-label="Close" class="close" onclick="closeModal()"></a>
+                    <h3 id="modal-title">Edit</h3>
+                </header>
+                <form id="generic-form" onsubmit="handleFormSubmit(event)">
+                    <div id="form-fields"></div>
+                    <footer>
+                        <button type="submit">Save</button>
+                    </footer>
+                </form>
+            </article>
+        </dialog>
+    </main>
 
     <script src="/static/script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/static/sw.js');
+        }
+    </script>
 </body>
 </html>

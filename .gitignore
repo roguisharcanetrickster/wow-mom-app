@@ -1,1 +1,16 @@
+# Binaries
+wowmom-server
+wow-mom-app/wowmom-server
+
+# Databases
 *.db
+*.db-journal
+
+# Logs
+*.log
+wow-mom-app/strace_output.txt
+
+# OS/Editor
+.DS_Store
+*.swp
+*.swo

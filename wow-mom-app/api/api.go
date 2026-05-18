@@ -48,7 +48,7 @@ func SetupRoutes(router *mux.Router) {
 	router.HandleFunc("/api/applications/{id}", deleteApplication).Methods("DELETE")
 }
 
-// Data structures for JSON responses
+// Data structures for responses
 type Mother struct {
 	MotherID               int       `json:"mother_id,omitempty"`
 	FirstName              string    `json:"first_name"`
@@ -165,9 +165,8 @@ func createMother(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// For demo purposes, we'll use a simple password hash
 	if mother.PasswordHash == "" {
-		mother.PasswordHash = "hashed_" + mother.Email // In production, use proper hashing
+		mother.PasswordHash = "hashed_" + mother.Email
 	}
 
 	result, err := db.Exec("INSERT INTO MOTHERS (first_name, last_name, email, password_hash, phone_number, address, city, state, zip_code, date_of_birth, children_info, preferred_meeting_times, preferred_locations) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -273,9 +272,8 @@ func createLeader(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// For demo purposes, we'll use a simple password hash
 	if leader.PasswordHash == "" {
-		leader.PasswordHash = "hashed_" + leader.Email // In production, use proper hashing
+		leader.PasswordHash = "hashed_" + leader.Email
 	}
 
 	result, err := db.Exec("INSERT INTO LEADERS (mother_id, first_name, last_name, email, password_hash, phone_number, bio, leader_status, approved_by_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
